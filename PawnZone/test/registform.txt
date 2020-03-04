@@ -1,0 +1,364 @@
+<!-- <php 
+    include_once('dbconnect.php');
+
+    //สร้างตัวแปร
+    $username = @$_POST['username'];
+    $password = @$_POST['password'];
+    $conpw = @$_POST['ConfirmPW'];
+    $fname = @$_POST['fname'];
+    $lname = @$_POST['lname'];
+    $bday = @$_POST['bday'];
+    $address = @$_POST['Add'];
+    $phone = @$_POST['phone'];
+    $email = @$_POST['email'];
+    $idcard = @$_POST['idcard'];
+    $position = @$_POST['position'];
+    $userpic = @$_POST['userpic'];
+
+    if (isset($_POST['regist'])) {
+        //เพิ่มข้อมูล register ลงในฐานข้อมูล(database)
+        $sql = "INSERT INTO member (MBusername,MBpassword,MBfname,MBlname,MBbday,MBaddress,phone,email,MBidcard,MBstatus,MBpicture)
+            VALUES ('$username','$password','$fname','$lname','$bday','$bday','$address','$phone','$email','$idcard','$position','$userpic') ";
+    
+        $result = mysqli_query($conn, $sql) or die ("Error in query: $sql " . mysqli_error());
+        
+        if($password = @$_POST['password'] != $conpw = @$_POST['ConfirmPW']){
+            echo "กรุณากรอกรหัสให้ตรงกัน";
+            exit();
+        }
+    
+    }
+?> -->
+
+    
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PawnZone</title>
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <script type="text/javascript" src="date_time.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/83fa38a1a9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Bootstrap Sidebar</h3>
+                <strong>BS</strong>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="#">
+                        <i class="fas fa-home"></i>
+                        หน้าหลัก
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fas fa-edit"></i>
+                        จำนำทอง
+                    </a>
+                </li>
+                <li>
+                    <a href="#infoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        ประวัติจำนำทอง
+                    </a>
+                    <ul class="collapse list-unstyled" id="infoSubmenu">
+                        <li>
+                            <a href="#">
+                                <i class="far fa-file-alt"></i>
+                                ประวัติทองคำ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="far fa-file-alt"></i>
+                                ประวัติลูกค้า
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        ชำระเงิน
+                    </a>
+                </li>
+                <li>
+                    <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-user-cog"></i>
+                        จัดการบุคคล
+                    </a>
+                    <ul class="collapse list-unstyled" id="userSubmenu">
+                        <li>
+                            <a href="#">
+                                <i class="fas fa-user-edit"></i>
+                                เจ้าของร้าน
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fas fa-user-edit"></i>
+                                พนักงาน
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-file-import"></i>
+                        ออกรายงาน
+                    </a>
+                </li>
+                
+
+            </ul>
+
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <nav class="navbar navbar-expand-lg ">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                
+                    <div class="top_menu">
+                        <ul>
+                            <li><a href="#"><i class="fas fa-search"></i></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+            
+
+
+                <!-- register-form -->
+            <div class="form-contain">
+            <form class="register-form needs-validation" action="#" method="post" enctype="multipart/form-data" novalidate>
+                <h2>Register</h2>
+                <form class="form-horizontal" >
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="fname">Username:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="username" placeholder="username" name="username" required>
+                </div>
+                <div class="valid-feedback">
+                        คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                    </div>
+                    <div class="invalid-feedback">
+                        กรุณากรอกรหัสผู้ใช้งาน!
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="fname">Password:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="password" placeholder="password" name="password" required>
+                </div>
+                <div class="valid-feedback">
+                        คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                    </div>
+                    <div class="invalid-feedback">
+                        กรุณากรอกรหัสยืนยันตัวตน!
+                    </div>
+                </div>
+
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="fname">Confirm Password:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="ConfirmPW" placeholder="password" name="ConfirmPW" required>
+                </div>
+                <div class="valid-feedback">
+                        คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                    </div>
+                    <div class="invalid-feedback">
+                        กรุณากรอกรหัสยืนยันตัวตน!
+                    </div>
+                </div>
+ 
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="fname">First name:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="fname" placeholder="ชื่อ" name="fname" required>
+                </div>
+                <div class="valid-feedback">
+                        คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                    </div>
+                    <div class="invalid-feedback">
+                        กรุณากรอกชื่อจริง!
+                    </div>
+                </div>
+                <div class="form-group">
+                <label class="control-label col-sm-2" for="lname">Last name:</label>
+                <div class="col-sm-4">          
+                    <input type="text" class="form-control" id="lname" placeholder="นามสกุล" name="lname" required>
+                </div>
+                <div class="valid-feedback">
+                        คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                    </div>
+                    <div class="invalid-feedback">
+                        กรุณากรอกนามสกุล!
+                    </div>
+                </div>
+                
+                <div class="form-group">
+            <label class="control-label col-sm-2" for="bday">Date of Birth:</label>
+            <div class="col-sm-4">          
+                <input type="date" class="form-control" id="bday"  name="bday" required>
+            </div>
+            <div class="valid-feedback">
+                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                </div>
+                <div class="invalid-feedback">
+                    กรุณากรอกระยะเวลาวัน/เดือน/ปี เกิด!
+                </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-sm-2" for="Add">Address:</label>
+            <div class="col-sm-4">          
+                <input type="textarea" class="form-control" id="Add" placeholder="ที่อยู่" name="Add" required>
+            </div>
+            <div class="valid-feedback">
+                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                </div>
+                <div class="invalid-feedback">
+                    กรุณากรอกที่อยู่!
+                </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-sm-2" for="phone">Phone number:</label>
+            <div class="col-sm-4">          
+                <input type="tel" class="form-control" placeholder="เบอร์โmรศัพท์"  id="phone"  name="phone" pattern="^0([8|9|6])([0-9]{8}$)" required>
+            </div>
+            <div class="valid-feedback">
+                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                </div>
+                <div class="invalid-feedback">
+                    กรุณากรอกเบอร์โทรศัพท์!
+                </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-sm-2" for="email">E-mail:</label>
+            <div class="col-sm-4">          
+                <input type="email" class="form-control" placeholder="อีเมล์"  id="email"  name="email" required>
+            </div>
+            <div class="valid-feedback">
+                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                </div>
+                <div class="invalid-feedback">
+                    กรุณากรอกอีเมล์!
+                </div>
+            </div>
+            <div class="form-group">
+            <label class="control-label col-sm-2" for="idcard">ID card:</label>
+            <div class="col-sm-4">          
+                <input type="number" class="form-control" id="idcard" placeholder="รหัสบัตรประชาชน" name="idcard" maxlength="13" pattern="^([0-9]{1})+(-[0-9]{4})+(-[0-9]{5})+(-[0-9]{2})+(-[0-9]{1}$)" required>
+            </div>
+            <div class="valid-feedback">
+                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                </div>
+                <div class="invalid-feedback">
+                    กรุณากรอกรหัสบัตรประชาชน 13 หลัก!
+                </div>
+            </div>
+            <div class=" col-sm-4">
+                <label for="position">Position:</label>
+                    <select class="custom-select" id="position" name="position" required>
+                        <option value="1เดือน">เจ้าของร้าน</option>
+                        <option value="3เดือน">พนักงาน</option>
+                    </select>
+                <div class="valid-feedback">
+                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                </div>
+                <div class="invalid-feedback">
+                    กรุณากรอกสถานะผู้ใช้ระบบ!
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2 " for="UserPicture">User Picture:</label>
+                <div class="col-sm-4">          
+                    <input type="file" class="custom-file-input" id="userpic"  name="userpic" accept="image/*" required>
+                    <label class="custom-file-label" for="UserPicture">รูปประจำตัว</label>
+                </div>
+                <div class="valid-feedback">
+                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                </div>
+                <div class="invalid-feedback">
+                    กรุณาเลือกไฟล์!
+                </div>
+            </div>
+
+           
+
+            <div class="form-group">        
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-outline-dark" name="submit">Register</button>
+                </div>
+            </div>
+                </form>
+            </form>
+
+            <script>
+        // Disable form submissions if there are invalid fields
+        (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+            });
+        }, false);
+        })();
+        </script>
+        </div> 
+
+
+        </div>
+    </div>    
+ 
+
+
+    <!-- JavaScript bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+
+
+    
+
+</body>
+</html>

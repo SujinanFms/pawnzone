@@ -1,0 +1,52 @@
+
+
+.printpawn{
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.content_pawn{
+    display: flex;
+}
+
+.pawnhead{
+    width: 50%;
+}
+.namelocation{
+    display: flex;
+    width: 50%;
+}
+
+.infolocation{
+    padding-left: 20px;
+}
+
+.tablepay{
+    width: 100%;
+}
+
+.table1 , .table2{
+    padding: 30px;
+    border-collapse: collapse;
+    
+  }
+  th, td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even){background-color: #f2f2f2}
+  
+  th {
+    background-color:rgb(223, 207, 65);
+    color: white;
+  }
+
+.printpawncard{
+    text-align: center;
+    margin: 30px;
+}
+
+

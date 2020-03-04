@@ -1,0 +1,416 @@
+@import url('https://fonts.googleapis.com/css?family=Kanit|Roboto+Slab:400,600,700&display=swap');
+
+/*
+    DEMO STYLE
+*/
+
+*{
+    list-style: none;  /* เอาลิสต์ออก */
+}
+
+
+body {
+    font-family: 'Kanit', sans-serif;
+    font-family: 'Roboto Slab', serif;
+    background: #fafafa;
+    text-decoration: none;
+}
+/*
+p {
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+} */
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.navbar {
+    padding: 15px 10px;
+    background: #4b4b4b;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+
+
+}
+
+.navbar .btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+    background: goldenrod;
+    color: gray;
+}
+
+
+.navbar .top_menu ul li a{
+    display: block;
+    margin: 0 10px ;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid gray;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+}
+
+.navbar .top_menu ul li a:hover{
+    background: goldenrod;
+    color: gray;
+}
+
+
+/* .navbar {
+    padding: 15px 10px;
+    background: #4b4b4b;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.navbar .btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+    background: goldenrod;
+    color: gray;
+}
+
+.top_menu{
+    margin: auto;
+    padding-left: 65%;
+}
+.navbar .top_menu ul li a{
+    display: block;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid gray;
+    border-radius: 50%;
+    color: #fff;
+    float: right;
+}
+
+.navbar .top_menu ul li a:hover{
+    background: goldenrod;
+    color: gray;
+}
+
+.containers-fluid{
+    display: flex;
+    text-align: center;
+    width: 100%;
+}*/
+
+
+
+
+/* hamburger
+i, span {
+    display: inline-block;
+}*/
+
+
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background:  #4b4b4b;
+    color: #fff;
+    transition: all 0.3s;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+#sidebar.active {
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+
+#sidebar.active .sidebar-header h2 {
+    display: none;
+
+}
+
+ /* header strong */
+#sidebar.active .sidebar-header strong {
+    display: block;
+}
+
+#sidebar ul li a {
+    text-align: left;
+}
+
+#sidebar.active ul li a {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+#sidebar.active ul li a i {
+    margin-right: 0;
+    display: block;
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+#sidebar.active ul ul a {
+    padding: 10px !important;
+}
+
+#sidebar.active .dropdown-toggle::after {
+    top: auto;
+    bottom: 10px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+}
+
+#sidebar .sidebar-header  {
+    padding: 20px;
+    background: goldenrod;
+    border-top-right-radius: 20px;
+
+}
+
+#sidebar .sidebar-header strong {
+    display: none;
+    /* font-size: 1.8em; */
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid gray;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff;
+}
+
+#sidebar ul li a:hover {
+    color: black;
+    background: gold;
+    text-decoration: none;
+}
+
+#sidebar ul li a i {
+    margin-right: 10px;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #717275;
+}
+
+/* เริ่ม CONTENT STYLE */
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;  /* Viewport Height (vh) จะบอกถึง เปอร์เซ็นต์ความสูงทั้งหมดของ viewport*/
+    transition: all 0.3s ease;
+}
+
+/* หน้า index */
+.contentinfo{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    font-size: 40px;
+}
+
+.tbcontainer{
+    text-align: center;
+}
+/*
+.content-price{
+    margin-top: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.content-price .row{
+    margin-left: 50%;
+}
+
+.content-price .price1{
+    display: flex;
+}
+
+.content-price .price1 .row2{
+    margin-left: 15%;
+}
+
+/* card profile */
+.card-content{
+    width: 100%;
+    text-align: center;
+}
+
+.addmember{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.card-content .layout_card{
+    display: flex;
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(167, 70, 70, 0.2);
+    transition: 0.3s;
+    width: 30%;
+    border-radius: 5px;
+    margin: 10px;
+
+}
+
+.content.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.Picprofile{
+    text-align: center;
+
+}
+
+.card-footer{
+    text-align: center;
+}
+
+
+
+
+/* MEDIAQUERIES */
+
+@media (max-width: 768px) {
+    #sidebar {
+        min-width: 80px;
+        max-width: 80px;
+        text-align: center;
+        margin-left: -80px !important;
+    }
+    .dropdown-toggle::after {
+        top: auto;
+        bottom: 10px;
+        right: 50%;
+        -webkit-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        transform: translateX(50%);
+    }
+    #sidebar.active {
+        margin-left: 0 !important;
+    }
+    #sidebar .sidebar-header h2 {
+        display: none;
+        color: #fff;
+    }
+
+    /* header strong */
+    #sidebar .sidebar-header strong {
+        display: block;
+    }
+    #sidebar ul li a {
+        padding: 20px 10px;
+    }
+    #sidebar ul li a span {
+        font-size: 0.85em;
+    }
+    #sidebar ul li a i {
+        margin-right: 0;
+        display: block;
+    }
+    #sidebar ul ul a {
+        padding: 10px !important;
+    }
+    #sidebar ul li a i {
+        font-size: 1.3em;
+    }
+    #sidebar {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
+
+/* ฟอร์มกรอกข้อมูลลูกค้าและข้อมูลทอง */
+.container .customform{
+    padding: 10px;
+    border: 2px solid gold;
+    border-radius: 5px;
+
+}
+
+.container .customform2{
+    margin-top: 20px;
+    border: 2px solid gold;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.container .pawncard{
+    text-align: center;
+    margin: 20px;
+}
+
+.logout{
+    text-align: center;
+}
+.btn-logout{
+     border-radius: 10px; 
+    /* background: linear-gradient(50deg,rgb(206, 175, 0),rgb(255, 255, 0)); */
+
+}
+
+.test{
+    border: 2px solid black;
+    border-radius: 2px;
+}
+
+
+.contentprice table{
+    width: auto;
+    
+}
