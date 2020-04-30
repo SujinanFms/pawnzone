@@ -14,11 +14,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>PawnZone</title>
     <link rel="stylesheet" href="css/css.css">
-    <!-- <link rel="stylesheet" href="css/pawncss.css"> -->
-
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://kit.fontawesome.com/83fa38a1a9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+        
+
 </head>
 <body>
     <div class="wrapper">
@@ -98,10 +101,36 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 
 
@@ -123,256 +152,67 @@
                         <i class="fas fa-align-left"></i>
                     </button>
                 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
 
                 </div>
             </nav>
 
 
-               <!-- ประวัติลูกค้า -->
-        <div class="tbcontainer">
-            <div class="dayrepot">
-                <div class="row">
-                    <label for="sel1">ออกรายงานประจำ</label>
-                    <div class="cal cal-md-6">
-                        <select class="form-control" id="sel1">
-                            <option>วัน</option>
-                            <option>เดือน</option>
-                            <option>ปี</option>
-                        </select>
-                    </div>
-                    <br><br><br>
-
-                   <!--  <label for="sel1">วันที่</label>
-                    <div class="cal cal-md-4">    
-                        <select class="form-control" id="sel1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                            <option>13</option>
-                            <option>14</option>
-                            <option>15</option>
-                            <option>16</option>
-                            <option>17</option>
-                            <option>18</option>
-                            <option>19</option>
-                            <option>20</option>
-                            <option>21</option>
-                            <option>22</option>
-                            <option>23</option>
-                            <option>24</option>
-                            <option>25</option>
-                            <option>26</option>
-                            <option>27</option>
-                            <option>28</option>
-                            <option>29</option>
-                            <option>30</option>
-                            <option>31</option>
-                        </select>
-                    </div>
-
-                    <label for="sel1">เดือน</label>
-                    <div class="cal cal-md-6">
-                        <select class="form-control" id="sel1">
-                            <option>วัน</option>
-                            <option>เดือน</option>
-                            <option>ปี</option>
-                        </select>
-                    </div>
-
-                    <label for="sel1">ปี</label>
-                    <div class="cal cal-md-6">
-                        <select class="form-control" id="sel1">
-                            <option>วัน</option>
-                            <option>เดือน</option>
-                            <option>ปี</option>
-                        </select>
-                    </div> -->
+            <div class="row">
+                <div class="col-md-3">  
+                    <input type="date" name="from_date" id="from_date" class="form-control" placeholder="From Date" />  
+                </div>  
+                <div class="col-md-3">  
+                    <input type="date" name="to_date" id="to_date" class="form-control" placeholder="To Date" />  
+                </div>  
+                <div class="col-md-5">  
+                    <input type="button" name="filter" id="filter" value="แสดงข้อมูล" class="btn btn-info" />  
+                </div>  
+                <div style="clear:both"></div>  
+                
+            </div>
+            <br>
+            <div class="tbcontainer" id="tbcontainer">
+                <div class="tbreport">
+                    <div class="tbreport1">
+                        <div class="table-responsive-sm">          
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ทองรูปพรรณ (บาท)</th>
+                                    <th>ทองคำแท่ง (บาท)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>รายรับ</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>รายจ่าย</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>ยอดสุุทธิ</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- tbreport1 -->
 
                     
-                </div><!-- row -->
-            </div><!-- day_report -->
 
-
-            <div class="tbreport">
-
-                <div class="tbreport1">
-                <div class="table-responsive-sm">          
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>ทองรูปพรรณ (บาท)</th>
-                            <th>ทองคำแท่ง (บาท)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>รายรับ</td>
-                            <td>100,000</td>
-                            <td>200,000</td>
-                        </tr>
-                        <tr>
-                            <td>รายจ่าย</td>
-                            <td>500,000</td>
-                            <td>800,000</td>
-                        </tr>
-                        <tr>
-                            <td>ยอดสุุทธิ</td>
-                            <td>-400,000</td>
-                            <td>-600,000</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-
-                <div class="tbreport2">
-                <div class="table-responsive-sm">          
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>ประเภท</th>
-                            <th>ชิ้น</th>
-                            <th>น้ำหนัก (กรัม)</th>
-                            <th>คน</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>ทองรูปพรรณ</td>
-                            <td>10</td>
-                            <td>25</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>ทองคำแท่ง</td>
-                            <td>12</td>
-                            <td>42</td>
-                            <td>7</td>
-                        </tr>
-                        <tr>
-                            <td>รวม</td>
-                            <td>22</td>
-                            <td>67</td>
-                            <td>12</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-
-
-                <div class="tbreport3">
-                <div class="table-responsive-sm">          
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>ไถ่ถอน</th>
-                            <th></th>
-                            <th>หลอม</th>
-                            <th></th>
-        
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th>ประเภท</th>
-                            <th>ชิ้น</th>
-                            <th>น้ำหนัก (กรัม)</th>
-                            <th>ชิ้น</th>
-                            <th>น้ำหนัก (กรัม)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>ทองรูปพรรณ</td>
-                            <td>10</td>
-                            <td>25</td>
-                            <td>5</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>ทองคำแท่ง</td>
-                            <td>12</td>
-                            <td>42</td>
-                            <td>7</td>
-                            <td>7</td>
-                        </tr>
-                        <tr>
-                            <td>รวม</td>
-                            <td>22</td>
-                            <td>67</td>
-                            <td>12</td>
-                            <td>8</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-
-                <div class="tbreport4">
-                <div class="table-responsive-sm">          
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>ยอดปัจจุบัน</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th>ประเภท</th>
-                            <th>ชิ้น</th>
-                            <th>น้ำหนัก (กรัม)</th>
-                            <th>คน</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>ทองรูปพรรณ</td>
-                            <td>10</td>
-                            <td>25</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>ทองคำแท่ง</td>
-                            <td>12</td>
-                            <td>42</td>
-                            <td>7</td>
-                        </tr>
-                        <tr>
-                            <td>รวม</td>
-                            <td>22</td>
-                            <td>67</td>
-                            <td>12</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                </div>
-
-
-            </div> <!-- tbreport -->
-
-
+                </div> <!-- tbreport -->
+                
             </div> <!-- tbcontainer -->
+
+              
+
+
 
         
 
@@ -382,7 +222,6 @@
 
 
     <!-- JavaScript bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -392,6 +231,34 @@
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
+
+
+            $(function(){  
+                $("#from_date").datepicker();  
+                $("#to_date").datepicker();  
+            });  
+            $('#filter').click(function(){  
+                var from_date = $('#from_date').val();  
+                var to_date = $('#to_date').val();  
+                if(from_date != '' && to_date != '')  
+                {  
+                     $.ajax({  
+                          url:"reportfilter.php",  
+                          method:"POST",  
+                          data:{from_date:from_date, to_date:to_date},  
+                          success:function(data)  
+                          {  
+                               $('#tbcontainer').html(data);  
+                          }  
+                     });  
+                }  
+                else  
+                {  
+                     alert("Please Select Date");  
+                }  
+            });
+
+
         });
     </script>
 

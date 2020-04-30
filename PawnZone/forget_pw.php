@@ -9,7 +9,6 @@
         $row = mysqli_fetch_array($sql); //คืนค่าข้อมูลกลับไปยัง $sql โดยเก็บไว้เป็นarray
 
         if ($count>0) {
-            //echo "Your password send successful.<br>Send to mail : ".$row["Email"];
             echo "<script>";
             echo "alert(\" Your password send successful. Send to your mail\");"; 
                 echo "window.history.back()";
@@ -27,10 +26,7 @@
 			$strMessage .= "=================================<br>";
 			$strMessage .= "ห้างทองอินเตอร์เนชั่นแนล<br>";
 			mail($strTo,$strSubject,$strMessage,$strHeader); 
-            
-            //echo $row['Password'];
         }else {
-            //echo "Not Found Your Email!";
             echo "<script>";
                 echo "alert(\" Not Found Your Email!\");"; 
                 echo "window.history.back()";

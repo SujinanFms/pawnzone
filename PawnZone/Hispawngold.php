@@ -3,8 +3,6 @@
     include_once('config.php');
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +19,29 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <style>
+        #myInput {
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            width: 30%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            margin-left: 20px;
+        }
+    </style>
 
 </head>
 <body>
@@ -101,10 +122,36 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -125,11 +172,7 @@
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                    
 
                 </div>
             </nav>
@@ -138,17 +181,15 @@
         <div class="datatable">
 
             <div class="tbcontainer">
+
+
+            <div class="row">
+                <input id="myInput" type="text" placeholder="Search.."> 
+            </div>
+            <br>
             <?php
-                //query ข้อมูลจากตาราง customer
-                // $query = "SELECT gold.*,customer.CusID , customer.Cuspawnday FROM gold LEFT JOIN customer ON customer.CusID = gold.CusID" or die("Error:" .mysqli_error());
                 $query = "select * FROM customer,golds where  golds.CusID = customer.CusID";
                 
-                //$query1  = "SELECT * FROM golds ORDER BY GoldID asc" or die("Error:" .mysqli_error());
-                //$query2  = "SELECT * FROM customer ORDER BY CusID asc" or die("Error:" .mysqli_error());
-                //เก็บข้อมูลที่ query ออกมาไว้ในตัวแปร result
-                //$result1 = mysqli_query($conn, $query1);
-                //$result2 = mysqli_query($conn, $query2);
-
                 $result = mysqli_query($conn, $query);
 
 
@@ -164,39 +205,27 @@
                         echo "<th>ประเภท</th>";
                         echo "<th>สถานะ</th>";
                         echo "<th>วันรับเข้า</th>";
-                        //echo "<th>แก้ไข</th>";
                     echo "<th>ข้อมูลทั้งหมด</th>";
                     echo "</tr>";
                 echo "</thead>";
-                echo "<tbody>";
+                echo "<tbody id='myTable'>";
 
                  while($row1 = mysqli_fetch_array($result)){
                    echo "<tr>";
                    echo "<td>" .$row1["GoldID"] .  "</td>";
                    echo "<td>" .$row1["CusID"] .  "</td>";
-                    echo "<td>" .$row1["CusFname"]. "</td>";//"&nbsp&nbsp".$row1["CusLname"]. 
+                    echo "<td>" .$row1["CusFname"]. "</td>";
                    echo "<td>" .$row1["DuePayment"] .  "</td>";
                    echo "<td>" .$row1["Price"] .  "</td>";
                    echo "<td>" .$row1["TypeGold"] .  "</td>";
                    echo "<td>" .$row1["GoldStatus"] .  "</td>";
                    
                    echo "<td>" .$row1["Goldpawnday"] .  "</td>";
-                  
-
-                   //แก้ไขข้อมูล 
-                      /*  echo "<td>";
-                           echo "<a href='delete.php?'" .$row1["GoldID"] . "'title=delete Record' data-toggle='tooltip' name='delete'><span class='fas fa-pencil-alt'></span></a>";
-                       echo "</td>"; */
-                   //ดูข้อมูลทั้งหมด ?>
+                  ?>
                         <td>
-                            <a class='btn btn-link btn-sm' href='showdata_pawngold.php?pawngold_id=<?=$row1["CusID"] ;?>'><span class='far fa-eye'></span></a>
+                            <a class='btn btn-link btn-sm' href='showdata_pawngold.php?pawngold_id=<?=$row1["GoldID"]  ;?>'><span class='far fa-eye'></span></a>
                         </td>
 
-
-                       <!-- echo "<td>";
-                       echo "<a herf='#UserUpdateForm.php?'" .$row1["0"] . "'title=View Record' data-toggle='tooltip'><span class='far fa-eye'></span></a>";
-                       echo "</td>";
-                 -->
                 <?PHP
                    echo "</tr>";
                  }
@@ -208,14 +237,6 @@
             ?>
             </div>
         </div>
-
-
-
-
-
-
-
-
 
         </div>  <!-- Content  -->
     </div>     <!-- wrapper  -->

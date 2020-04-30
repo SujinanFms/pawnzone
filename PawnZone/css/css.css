@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Kanit|Roboto+Slab:400,600,700&display=swap');
 
-/*
-    DEMO STYLE
-*/
-
 *{
     list-style: none;  /* เอาลิสต์ออก */
 }
@@ -15,13 +11,6 @@ body {
     background: #fafafa;
     text-decoration: none;
 }
-/*
-p {
-    font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: #999;
-} */
 
 a,
 a:hover,
@@ -67,61 +56,6 @@ a:focus {
     background: goldenrod;
     color: gray;
 }
-
-
-/* .navbar {
-    padding: 15px 10px;
-    background: #4b4b4b;
-    border-radius: 10px;
-    margin-bottom: 40px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-
-
-.navbar .btn {
-    box-shadow: none;
-    outline: none !important;
-    border: none;
-    background: goldenrod;
-    color: gray;
-}
-
-.top_menu{
-    margin: auto;
-    padding-left: 65%;
-}
-.navbar .top_menu ul li a{
-    display: block;
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-    border: 1px solid gray;
-    border-radius: 50%;
-    color: #fff;
-    float: right;
-}
-
-.navbar .top_menu ul li a:hover{
-    background: goldenrod;
-    color: gray;
-}
-
-.containers-fluid{
-    display: flex;
-    text-align: center;
-    width: 100%;
-}*/
-
-
-
-
-/* hamburger
-i, span {
-    display: inline-block;
-}*/
-
-
 
 /* ---------------------------------------------------
     SIDEBAR STYLE
@@ -263,25 +197,6 @@ ul ul a {
 .tbcontainer{
     text-align: center;
 }
-/*
-.content-price{
-    margin-top: 30px;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.content-price .row{
-    margin-left: 50%;
-}
-
-.content-price .price1{
-    display: flex;
-}
-
-.content-price .price1 .row2{
-    margin-left: 15%;
-}
 
 /* card profile */
 .card-content{
@@ -318,9 +233,6 @@ ul ul a {
 .card-footer{
     text-align: center;
 }
-
-
-
 
 /* MEDIAQUERIES */
 
@@ -400,7 +312,6 @@ ul ul a {
 }
 .btn-logout{
      border-radius: 10px; 
-    /* background: linear-gradient(50deg,rgb(206, 175, 0),rgb(255, 255, 0)); */
 
 }
 

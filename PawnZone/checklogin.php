@@ -18,7 +18,7 @@
             
             $_SESSION['fname'] = $row['MBfname']; //ประกาศ session เอา Name มาใช้งาน หรือประกาศตัวแปร name ไว้เพื่อส่งค่า
             $_SESSION['position'] = $row['MBstatus']; //ประกาศ session เอา Status มาใช้งาน หรือประกาศตัวแปร status ไว้เพื่อส่งค่า
-            
+            $_SESSION['MID'] = $row['MbID'];
             if($_SESSION["position"]=="เจ้าของร้าน"){ //ถ้าเป็น admin ให้กระโดดไปหน้า index.php
                 header('location:index.php');
             }

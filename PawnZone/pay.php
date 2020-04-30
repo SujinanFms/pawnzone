@@ -21,33 +21,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
-<script type="text/javascript">
-function nStr(){
-    var inputprice = document.getElementById('input_price').value;
-    var inputrate = document.getElementById('input_rate').value;
-    var price = parseFloat(inputprice); //แปลงข้อความจาก input_price เป็นตัวเลขแบบ float
-    var rate = parseFloat(inputrate);
-    var show = document.getElementById('show');
-    var payrate;
-   if(isNaN(price)||isNaN(rate)){
-     document.getElementById("show").setAttribute("color","red");
-     show.innerHTML="ERROR"
-   }
-   else{
-     if(inputprice.length>0){
-       if(isNaN(rate)){
-         document.getElementById("show").setAttribute("color","red");
-         show.innerHTML="ERROR"
-       }
-       else if(inputrate.length>0){
-         document.getElementById("show").setAttribute("color","Blue");
-         payrate = (price*rate)/100
-         show.innerHTML = payrate;
-       }
-     }
-   }
-
- }
+<script language="JavaScript">
+	function fncSum(){
+        var inputpayrate = document.getElementById('update_payrate').value;
+        var payrate = parseFloat(inputpayrate);
+        var total = document.form1.txtNumberC.value;
+        total = payrate * parseFloat(document.form1.Nperiod.value);
+        document.getElementById("txtNumberC").value = total;
+	}
 </script>
 
 <body>
@@ -128,10 +109,36 @@ function nStr(){
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -152,11 +159,7 @@ function nStr(){
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                   
 
                 </div>
             </nav>
@@ -164,7 +167,7 @@ function nStr(){
 
         <!-- สร้างฟอร์มข้อมูลลูกค้า -->
         <div class="container">
-        <form name="form1" class="main-form needs-validation" action="pay.php" method="post" enctype="multipart/form-data" novalidate>
+        <form name="form1" class="main-form needs-validation" action="insertpay.php" method="post" enctype="multipart/form-data" novalidate>
         <?php
            if($_GET["payment_id"]==''){ 
             echo "<script type='text/javascript'>"; 
@@ -175,27 +178,37 @@ function nStr(){
 
             $payment_id = mysqli_real_escape_string($conn,$_GET['payment_id']);
 
-            $query = "select * FROM customer , golds WHERE golds.CusID ='$payment_id' && golds.CusID = customer.CusID  ";
-            $result = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error());
+            $query = "select * FROM customer ,golds WHERE golds.GoldID ='$payment_id' && golds.CusID = customer.CusID ";
+            $result = mysqli_query($conn, $query) or die ("Error in query: $query " . mysqli_error($query));
             $row = mysqli_fetch_array($result);
+
 
             //สร้างตัวแปรสำหรับรับค่าที่นำมาแก้ไขจากฟอร์ม
             $update_CusID = $row['CusID'];
+            $update_GoldID = $row['GoldID'];
             $update_CusFname = $row['CusFname'];
-            $update_CusLname = $row['CusLname'] ;
-            $update_Cuspawnday = $row['Cuspawnday']; 
+            $update_CusLname = $row['CusLname'] ; 
             $update_CusAddress = $row['CusAddress'];
             $update_Tel = $row['Tel'];
+            $update_CusImg = $row['CusImg'];
 
-            $update_GoldID = $row['GoldID'];
-            $update_TypeGold = $row["TypeGold"];
-            $update_Goldpawnday = $row["Goldpawnday"];
-            $update_GoldStatus = $row["GoldStatus"];
-            $update_WeightGold = $row["WeightGold"];
-            $update_Price = $row["Price"];
-            $update_Rate = $row["Rate"];
-            $update_Pay = $row["Pay"];
-            $update_DuePayment  = $row["DuePayment"];
+
+            $query2 = "select * FROM golds where  golds.GoldID = '$payment_id'  ";
+            $result2 = mysqli_query($conn, $query2) or die ("Error in query:$query2 " . mysqli_error($query2));
+            $row2 = mysqli_fetch_array($result2);
+
+            $update_GoldID = $row2['GoldID'];
+            $update_TypeGold = $row2["TypeGold"];
+            $update_Goldpawnday = $row2["Goldpawnday"];
+            $u_status = $row2["GoldStatus"];
+            $update_WeightGold = $row2["WeightGold"];
+            $update_Price = $row2["Price"];
+            $update_Rate = $row2["Rate"];
+            $update_Pay = $row2["Pay"];
+            $update_DuePayment  = $row2["DuePayment"];
+            $update_GoldImg = $row2['GoldImg'];
+            $update_Golddetail = $row2['Golddetail'];
+            $update_balance = $row2['Goldbalance'];
                    
         
         ?>
@@ -230,16 +243,6 @@ function nStr(){
                             </div>
                     </div> 
                 </div>        
-                <!-- <div class="form-group col-md-6">
-                    <label for="birthday">วัน/เดือน/ปี ที่จำนำ </label>
-                    <input type="date" name="pawnday" id="pawnday" class="form-control" required value="<php echo $update_Cuspawnday ?>">
-                    <div class="valid-feedback">
-                        คุณกรอกข้อมูลเรียบร้อยแล้ว!
-                    </div>
-                    <div class="invalid-feedback">
-                            กรุณากรอกวัน/เดือน/ปีนำทองมาจำนำ!
-                    </div>
-                </div>  -->
                 <div class="form-group col-md-12">
                         <label for="address">ที่อยู่ </label>
                         <input type="text" name="address" id="address" class="form-control" required value="<?php echo  $update_CusAddress ?>">
@@ -261,13 +264,6 @@ function nStr(){
                         </div>
                 </div>
             </div>
-
-           <!--  <div class="pawncard">
-                    <button class="btn btn-primary" type="submit" name="update_data" value="Update">ยืนยันการแก้ไข</button>
-            </div> -->
-            </form>         
-        
-
         <!-- ฟอร์มทองที่นำมาจำนำ -->
         <div class="customform2">
             <div class="form-check col-md-12">
@@ -298,22 +294,22 @@ function nStr(){
                         </div>
 
                         <div class="col">
-                                <div class="col-md-8">
-                                    <label for="goldStatus">สถานะ</label>
-                                        <select class="custom-select" id="update_goldStatus" name="update_goldStatus"  required>
-                                            <?php $type = (isset($fetch['GoldStatus'])) ? $fetch['GoldStatus'] : ''; ?>
-                                            <option value="อยู่ในระบบ" <?php if( $type == "อยู่ในระบบ") echo  "selected"; ?> >อยู่ในระบบ</option>
-                                            <option value="ไถ่ถอน" <?php if( $type == "ไถ่ถอน") echo  "selected"; ?> >ไถ่ถอน</option>
-                                            <option value="นำไปหลอม" <?php if( $type == "นำไปหลอม") echo  "selected"; ?> >นำไปหลอม</option>
-                                        </select>
-                                        <div class="valid-feedback">
-                                                คุณกรอกข้อมูลเรียบร้อยแล้ว!
-                                        </div>
-                                        <div class="invalid-feedback">
-                                                กรุณากรอกระยะเวลากำหนดชำระดอกเบี้ย!
-                                        </div>
-                                </div>
-                        </div>
+                            <div class="col-md-8">
+                                <label for="goldStatus">สถานะ</label>
+                                
+                                    <select class="custom-select" id="update_goldStatus" name="update_goldStatus"  required>
+                                        <option value="อยู่ในระบบ" <?php if( $u_status == "อยู่ในระบบ") echo  "selected"; ?> >อยู่ในระบบ</option>
+                                        <option value="ไถ่ถอน" <?php if( $u_status == "ไถ่ถอน") echo  "selected"; ?> >ไถ่ถอน</option>
+                                        <option value="นำไปหลอม" <?php if( $u_status == "นำไปหลอม") echo  "selected"; ?> >นำไปหลอม</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                            คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                            กรุณากรอกระยะเวลากำหนดชำระดอกเบี้ย!
+                                    </div>
+                            </div>
+                    </div>
                     </div>
 
                     <div class="form-row">
@@ -332,7 +328,7 @@ function nStr(){
                             <div class="col ">
                                     <div class="form-group col-md-8">
                                         <label for="price">ราคาจำนำ </label>
-                                        <input type="text" name="update_price" id="update_price" class="form-control" placeholder="บาท" maxlength="5"  value="<?php echo  $update_Price ?>" required onkeyup='nStr()'>
+                                        <input type="text" name="update_price" id="update_price" class="form-control" placeholder="บาท" maxlength="5"  value="<?php echo  $update_Price ?>" required >
                                         <div class="valid-feedback">
                                                 คุณกรอกข้อมูลเรียบร้อยแล้ว!
                                             </div>
@@ -346,7 +342,7 @@ function nStr(){
                                 <div class="col">
                                     <div class="form-group col-md-8">
                                         <label for="rate">อัตราดอกเบี้ย </label>
-                                        <input type="text" name="update_rate" id="update_rate" class="form-control" placeholder="%"  maxlength="3" value="<?php echo  $update_Rate  ?>" required onkeyup='nStr()'>
+                                        <input type="text" name="update_rate" id="update_rate" class="form-control" placeholder="%"  maxlength="3" value="<?php echo  $update_Rate  ?>" required >
                                         <div class="valid-feedback">
                                                 คุณกรอกข้อมูลเรียบร้อยแล้ว!
                                             </div>
@@ -372,26 +368,121 @@ function nStr(){
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="duepayment">กำหนดชำระดอกเบี้ย</label>
-                                    <select class="custom-select" id="update_duepayment" name="update_duepayment"  required>
-                                        <option value="1เดือน" <?php if( $row["DuePayment"] == "1เดือน") echo  "selected"; ?> >1 เดือน</option>
-                                        <option value="3เดือน" <?php if( $row["DuePayment"] == "3เดือน") echo  "selected"; ?> >3 เดือน</option>
-                                    </select>
-                                    <div class="valid-feedback">
-                                            คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                        <!-- balance -->
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group col-md-8">
+                                        <label for="duepayment">กำหนดชำระดอกเบี้ย</label>
+                                        <select class="custom-select" id="update_duepayment" name="update_duepayment"  required>
+                                            <option value="1เดือน" <?php if( $row["DuePayment"] == "1เดือน") echo  "selected"; ?> >1 เดือน</option>
+                                            <option value="3เดือน" <?php if( $row["DuePayment"] == "3เดือน") echo  "selected"; ?> >3 เดือน</option>
+                                        </select>
+                                        <div class="valid-feedback">
+                                                คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                                กรุณากรอกระยะเวลากำหนดชำระดอกเบี้ย!
+                                        </div>
                                     </div>
-                                    <div class="invalid-feedback">
-                                            กรุณากรอกระยะเวลากำหนดชำระดอกเบี้ย!
+                                </div>
+                                <div class="col">
+                                    <div class="form-group col-md-8">
+                                        <label for="balance">เงินต้นคงเหลือ </label>
+                                            <div class="show-cal">
+                                                <input type="text" name="update_balance" id="update_balance" class="form-control" value="<?php echo $update_balance ?>"  required >
+                                            <!-- <font id="show" color="" name="payrate"></font>  -->
+                                            </div>
+
+                                            <div class="valid-feedback">
+                                                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                                            </div>
+                                            <div class="invalid-feedback">
+                                                    กรุณากรอกดอกเบี้ยที่ลูกค้าต้องจ่าย!
+                                            </div>
                                     </div>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                    
+                    <div class="pawncard">
+                    <a href="#" class="btn btn-success"  data-toggle="modal" data-target="#interest"  id="btn" type="submit" name="submit">ชำระเงิน</a>
+                    
+                    <!-- ฟอร์มชำระการต่อดอกเบี้ย -->
+                    
+                        <!-- Modal -->
+                        <div class="modal fade" id="interest" role="dialog">
+                            <div class="modal-dialog">
+                            
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">ชำระดอกเบี้ย</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="Md_CusID" size="30" value="<?php echo $update_CusID ?>">
+                                    <input type="hidden" name="Md_GoldID" size="30" value="<?php echo $update_GoldID ?>">
+                                    <input type="hidden" name="Md_Typegold" size="30" value="<?php echo $update_TypeGold ?>">
+                                    
+                                        <div class="form-group row">
+                                            <label for="md_payrate" class="col-sm-4 col-form-label">ดอกเบี้ยที่ต้องจ่าย</label>
+                                            <div class="col-sm-8">
+                                            <input type="text" name="md_payrate" class="form-control" value="<?php echo $update_Pay ?>" readonly OnChange="fncSum();" onkeyup='fncSum()'>
+                                            
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="payday" class="col-sm-4 col-form-label">วันชำระดอกเบี้ย</label>
+                                            <div class="col-sm-8">
+                                            <input type="date" name="payday" class="form-control" required >
+                                                <div class="valid-feedback">
+                                                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    กรุณากรอกวัน/เดือน/ปี ที่ชำระดอกเบี้ย!
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="period" class="col-sm-4 col-form-label">จำนวนงวด</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" type="text" name="Nperiod" value="" OnChange="fncSum();" onkeyup='fncSum()' placeholder="กรอกตัวเลข" required>
+                                                <div class="valid-feedback">
+                                                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    กรุณากรอกจำนวนงวดที่จะชำระดอกเบี้ย!
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="sum" class="col-sm-4 col-form-label">ยอดชำระ</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="txtNumberC" id="txtNumberC" class="form-control" placeholder="บาท" >
+                                                <div class="valid-feedback">
+                                                    คุณกรอกข้อมูลเรียบร้อยแล้ว!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    กรุณากรอกยอดชำระเงิน!
+                                                </div>
+                                            </div>
+                                        </div>
+                                   
+                                </div>
+                                <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" name="btnpay" id="btnpay">ยืนยัน</button>
+                                </div>
+                            </div>
+                            
                             </div>
                         </div>
-                    <div class="pawncard">
-                    <a href="#" class="btn btn-success" id="btn" type="submit" name="submit">ชำระเงิน</a>
-                    
-                    
                     </div>
-
+                
         </form>
 
         <script>

@@ -21,6 +21,29 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <style>
+        #myInput {
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            width: 30%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            margin-left: 20px;
+        }
+    </style>
 
 </head>
 <body>
@@ -101,10 +124,36 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -125,23 +174,27 @@
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
-
+                   
                 </div>
             </nav>
 
          <!-- ประวัติลูกค้า -->
         <div class="datatable">
 
-            <div class="tbcontainer">
+            <div class="bcontainer">
+
+
+
+            <div class="row">
+                <input id="myInput" type="text" placeholder="Search.."> 
+            </div>
+            <br>
+
+
+                
             <?php
                 //query ข้อมูลจากตาราง customer
-                // $query = "SELECT gold.*,customer.CusID , customer.Cuspawnday FROM gold LEFT JOIN customer ON customer.CusID = gold.CusID" or die("Error:" .mysqli_error());
-                $query  = "SELECT * FROM golds ORDER BY GoldID asc" or die("Error:" .mysqli_error());
+                $query  = "SELECT * FROM golds ORDER BY GoldID asc" or die("Error:" .mysqli_error($query));
 
                 //เก็บข้อมูลที่ query ออกมาไว้ในตัวแปร result
                 $result = mysqli_query($conn, $query);
@@ -155,9 +208,6 @@
                         echo "<th>รหัสทองคำ</th>";
                         echo "<th>รูป</th>";
                         echo "<th>รหัสลูกค้า</th>";
-                        
-                        //echo "<th>วันรับเข้า</th>";
-                        //echo "<th>วันต่อดอก</th>";
                         echo "<th>งวดชำระ</th>";
                         echo "<th>ราคาทอง</th>";
                         echo "<th>อัตราดอกเบี้ย</th>";
@@ -165,73 +215,52 @@
                         echo "<th>ประเภท</th>";
                         echo "<th>น้ำหนักทอง</th>";
                         echo "<th>วันรับเข้า</th>";
+                        echo "<th>วันที่ชำระเงินล่าสุด</th>";
+                        echo "<th>ยอดเงินต้น</th>";
                         echo "<th>สถานะ</th>";
                         echo "<th>แก้ไข</th>";
                         echo "<th>ลบ</th>";
                     echo "</tr>";
                 echo "</thead>";
-                echo "<tbody>";
+                echo "<tbody id='myTable'>";
                 while($row = mysqli_fetch_array($result)){
                     echo "<tr>" ;
-                    echo "<td>" .$row["GoldID"] .  "</td>";
-                    ?>
-                    <td>   
-                        <img src= "goldimg/<?php echo $row["GoldImg"];?>" width="10%">
+                    echo "<td>" .$row["GoldID"] .           "</td>";
+            ?>
+                    <td width="10%">   
+                        <img src= "goldimg/<?php echo $row["GoldImg"];?>" width="50%">
                     </td>
                     <?php
-                    echo "<td>" .$row["CusID"] .  "</td>";
-                   
-                // echo "<td>" .$row["Cuspawnday"] .  "</td>";
-                // echo "<td>" .$row["DateITR"] .  "</td>";
-                echo "<td>" .$row["DuePayment"] .  "</td>";
-                    echo "<td>" .$row["Price"] .  "</td>";
-                    echo "<td>" .$row["Rate"] .  "</td>";
-                    echo "<td>" .$row["Pay"] .  "</td>";
-                    echo "<td>" .$row["TypeGold"] .  "</td>";
-                    echo "<td>" .$row["WeightGold"] .  "</td>";
-                 echo "<td>" .$row["Goldpawnday"] .  "</td>";
-                 echo "<td>" .$row["GoldStatus"] .  "</td>";
+                        echo "<td>" .$row["CusID"] .        "</td>";
+                        echo "<td>" .$row["DuePayment"] .   "</td>";
+                        echo "<td>" .$row["Price"] .        "</td>";
+                        echo "<td>" .$row["Rate"] .         "</td>";
+                        echo "<td>" .$row["Pay"] .          "</td>";
+                        echo "<td>" .$row["TypeGold"] .     "</td>";
+                        echo "<td>" .$row["WeightGold"] .   "</td>";
+                        echo "<td>" .$row["Goldpawnday"] .  "</td>";
+                        echo "<td>" .$row["Goldpayday"] .   "</td>";
+                        echo "<td>" .$row["Goldbalance"] .  "</td>";
+                        echo "<td>" .$row["GoldStatus"] .   "</td>";
+                    ?>
 
-                //แก้ไขข้อมูล?>
-
+                <!-- แก้ไขข้อมูล -->
                 <td>
                     <a class='btn btn-link btn-sm' href='editgold.php?gold_id=<?=$row["GoldID"];?>'><span class='fas fa-pencil-alt'></span></a>
-                    <!-- <a class='btn btn-link btn-sm' href='edit2.php?edit=<  $row["CusID"];?>' ><span class='fas fa-pencil-alt'></span></a> -->
-                    
-                    <!-- <a herf='#UserUpdateForm.php?'" .$row["0"] . "'title=Update Record' data-toggle='tooltip'><span class='fas fa-pencil-alt'></span></a>"; -->
-               </td>
-               <td>
-                <a class='btn btn-link btn-sm' href='delete.php?gold2_id=<?=$row["GoldID"];?>'><span class='fa fa-trash-o'></span></a>
-               </td>
-
+                </td>
+                <td>
+                    <a class='btn btn-link btn-sm' href='delete.php?gold_id=<?=$row["GoldID"];?>'><span class='fa fa-trash-o'></span></a>
+                </td>
                 <?php
-                    /* echo "<td>";
-                    echo "<a class='btn btn-link btn-sm' href='#editcustomer.php&edit=<?' " .$row['CusID'] . " ;?> <span class='fas fa-pencil-alt'></span></a>";
-                        //echo "<a herf='#UserUpdateForm.php?'" .$row["0"] . "'title=Update Record' data-toggle='tooltip'><span class='fas fa-pencil-alt'></span></a>";
-                    echo "</td>";
-                //ดูข้อมูลทั้งหมด
-                    echo "<td>";
-                    echo " <a class='btn btn-link btn-sm' href='Hispawngold.php'><span class='far fa-eye'></span></a>";
-                    //echo "<a herf='#UserUpdateForm.php?'" .$row["0"] . "'title=View Record' data-toggle='tooltip'><span class='far fa-eye'></span></a>";
-                    echo "</td>"; */
                     echo "</tr>";
                     }
-                echo "<tbody>";
-                echo"</table>";
-                //close connection
-                mysqli_close($conn);
-            ?>
+                    echo "<tbody>";
+                    echo"</table>";
+                    //close connection
+                    mysqli_close($conn);
+                ?>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
         </div>  <!-- Content  -->
     </div>     <!-- wrapper  -->
 

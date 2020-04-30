@@ -2,6 +2,7 @@
     session_start();
     include_once('config.php');
 
+    
         
 ?>
 
@@ -131,10 +132,36 @@ function nStr(){
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -155,12 +182,7 @@ function nStr(){
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
-
+                    
                 </div>
             </nav>
 
@@ -196,7 +218,7 @@ function nStr(){
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="birthday">วัน/เดือน/ปี ที่จำนำ </label>
+                    <label for="pawnday">วัน/เดือน/ปี ที่จำนำ </label>
                     <input type="date" name="pawnday" id="pawnday" class="form-control" required>
                     <div class="valid-feedback">
                         คุณกรอกข้อมูลเรียบร้อยแล้ว!
@@ -407,7 +429,7 @@ function nStr(){
             });
             </script>
 
-        <!-- <script>
+<script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
             'use strict';
@@ -416,7 +438,7 @@ function nStr(){
             var forms = document.getElementsByClassName('needs-validation');
             // Loop over them and prevent submission
             var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('send', function(event) {
+                form.addEventListener('submit', function(event) {
                 if (form.checkValidity() === false) {
                     event.preventDefault();
                     event.stopPropagation();
@@ -426,7 +448,7 @@ function nStr(){
             });
             }, false);
         })();
-        </script> -->
+        </script>
 
         
         </div>

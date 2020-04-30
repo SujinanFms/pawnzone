@@ -19,6 +19,7 @@
     $status = 'อยู่ในระบบ';
     $golddetail = @$_POST['gold_detail'];
 
+
    
 
 
@@ -78,7 +79,7 @@
         // $query = " INSERT INTO customer (CusFname,CusLname,Cuspawnday,CusAddress,Tel)
         //              VALUES ('$fname','$lname','$dpawn','$address','$tel')";
         
-        $queryy = "select * FROM customer " or die ("Error in query: $queryy " . mysqli_error());
+        $queryy = "select * FROM customer " or die ("Error in query: $queryy " . mysqli_error($queryy));
         $resultt = mysqli_query($conn, $queryy);
         // echo "name".$fname;
         while($row1 = mysqli_fetch_array($resultt)){
@@ -98,18 +99,18 @@
             }
         }
         if($check == "มี"){
-            $sql2 = " INSERT INTO golds (CusID,TypeGold,Goldpawnday,WeightGold,Price,rate,Pay,DuePayment,Goldstatus,GoldImg,Golddetail)
-                    VALUES ('$id','$goldt','$weight','$dpawn','$price','$rate','$payrate','$duepayment','$status','$newname2','$golddetail')";
-            $result2 = mysqli_query($conn, $sql2) or die ("Error in query: $sql2 " . mysqli_error());
+            $sql2 = " INSERT INTO golds (CusID,Goldpawnday,TypeGold,WeightGold,Price,rate,Pay,DuePayment,Goldstatus,GoldImg,Golddetail,Goldbalance)
+                    VALUES ('$id','$dpawn','$goldt','$weight','$price','$rate','$payrate','$duepayment','$status','$newname2','$golddetail','$price')";
+            $result2 = mysqli_query($conn, $sql2) or die ("Error in query: $sql2 " . mysqli_error($sql2));
         }
         else{
             $sql = " INSERT INTO customer (CusFname,CusLname,CusAddress,Tel,CusImg)
                      VALUES ('$fname','$lname','$address','$tel','$newname1')";
-            $result = mysqli_query($conn, $sql) or die ("Error in query: $sql " . mysqli_error());
+            $result = mysqli_query($conn, $sql) or die ("Error in query: $sql " . mysqli_error($sql));
             $last_id = $conn->insert_id;
-            $sql2 = " INSERT INTO golds (CusID,TypeGold,Goldpawnday,WeightGold,Price,rate,Pay,DuePayment,Goldstatus,GoldImg,Golddetail)
-                        VALUES ('$last_id','$goldt','$dpawn','$weight','$price','$rate','$payrate','$duepayment','$status','$newname2','$golddetail')";
-            $result2 = mysqli_query($conn, $sql2) or die ("Error in query: $sql2 " . mysqli_error());
+            $sql2 = " INSERT INTO golds (CusID,TypeGold,Goldpawnday,WeightGold,Price,rate,Pay,DuePayment,Goldstatus,GoldImg,Golddetail,Goldbalance)
+                        VALUES ('$last_id','$goldt','$dpawn','$weight','$price','$rate','$payrate','$duepayment','$status','$newname2','$golddetail','$price')";
+            $result2 = mysqli_query($conn, $sql2) or die ("Error in query: $sql2 " . mysqli_error($sql2));
         }
         
         //เพิ่มข้อมูล
@@ -163,15 +164,29 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://kit.fontawesome.com/83fa38a1a9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style type="text/css">
+        
 
+        @media print {
+            #btnprint , #sidebar , #navcontent {
+                display: none;
+            }
+            .printpawn{
+                width: 60%;
+                font-size: 10px;
+            }
+            
+        }
+    </style>
 </head>
 <body>
     <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
+        
+         <!-- Sidebar  -->
+         <nav id="sidebar">
             <div class="sidebar-header">
                 <?php isset($_SESSION['MbID']); ?>
-                    <h2>คุณ <?php echo $_SESSION['fname']; ?></h2>  
+                    <h2>คุณ <?php echo $_SESSION['fname']; ?></h2>
                     <h2>เป็น :  <?php echo $_SESSION['position']; ?></h2>
                     <strong><?php echo $_SESSION['fname']; ?></strong>
             </div>
@@ -243,43 +258,62 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                
 
             </ul>
 
             <div class="logout">
-                <a href="logout.php"> 
+                <a href="logout.php">
                     <input type="submit" class="btn btn-warning" name="logout" value="Logout"><br>
                 </a>
             </div>
 
-            
-
-        </nav> <!-- Sidebar  -->
+        </nav>
 
         <!-- Page Content  -->
         <div id="content">
-            <nav class="navbar navbar-expand-lg ">
+            <nav class="navbar navbar-expand-lg " id="navcontent">
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn">
                         <i class="fas fa-align-left"></i>
                     </button>
                 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                    
 
                 </div>
             </nav>
-
-            <div class="printpawn">
+            
+            <div class="printpawn" id="printpawn">
             <?php 
                 /* $Fname = $_REQUEST["firstname"];
                 $Lname = $_REQUEST["lastname"];
@@ -352,7 +386,7 @@
                 <div class="col"><div class="form-inline">
                 
                         <label for="id" align="left" >รหัสลูกค้า : </label>
-                        <?php echo "&nbsp;".$id ?>
+                        <?php echo "&nbsp;".$last_id ?>
                     </div> 
                     </div>
                 </div> 
@@ -466,8 +500,11 @@
          </div>       
                 
         <div class="printpawncard">
-            <button class="btn btn-primary" type="submit" name="submit">พิมพ์บัตรจำนำ</button>
-        </div>   
+            <button  onClick="window.print()" class="btn btn-primary" type="submit" name="submit" id="btnprint">พิมพ์บัตรจำนำ</button>
+            
+        </div>  
+        
+        
                           
            
             

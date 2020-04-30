@@ -98,10 +98,36 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -122,11 +148,7 @@
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                   
 
                 </div>
             </nav>
@@ -143,7 +165,7 @@
                 <div class="layout_card">
                     <?php
                         
-                        $query = "SELECT * FROM members WHERE MBstatus = 'เจ้าของร้าน' " or die ("Error in query: $query " . mysqli_error());
+                        $query = "SELECT * FROM members WHERE MBstatus = 'เจ้าของร้าน' " or die ("Error in query: $query " . mysqli_error( $query));
                         $result = mysqli_query($conn, $query);
                         
                         $path = 'userpic/';

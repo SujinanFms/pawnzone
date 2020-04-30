@@ -59,7 +59,7 @@
         $sql = "INSERT INTO members (MBusername,MBpassword,MBfname,MBlname,MBbday,MBaddress,phone,email,MB_IDcard,MBstatus,MBpicture)
         VALUES ('$username','$password','$fname','$lname','$bday','$address','$phone','$email','$idcard','$position','$newname') ";
 
-         $result = mysqli_query($conn, $sql) or die ("Error in query: $sql " . mysqli_error());
+         $result = mysqli_query($conn, $sql) or die ("Error in query: $sql " . mysqli_error($sql));
         }
          
         //ปิดการเชื่อมต่อ database
@@ -89,54 +89,6 @@
     
 }
 
-    /*
-    //สร้างตัวแปร
-    $username = @$_POST['username'];
-    $password = $conn->real_escape_string($_POST['password']);
-    $conpw = @$_POST['ConfirmPW'];
-    $fname = @$_POST['fname'];
-    $lname = @$_POST['lname'];
-    $bday = @$_POST['bday'];
-    $address = @$_POST['Add'];
-    $phone = @$_POST['phone'];
-    $email = @$_POST['email'];
-    $idcard = @$_POST['idcard'];
-    $position = @$_POST['position'];
-    $userpic = @$_POST['userpic'];
-
-
-
-     if (isset($_POST['regist'])) {
-        //เพิ่มข้อมูล register ลงในฐานข้อมูล(database)
-        $sql = "INSERT INTO member (MBusername,MBpassword,MBfname,MBlname,MBbday,MBaddress,phone,email,MBidcard,MBstatus,MBpicture)
-            VALUES ('$username','$password','$fname','$lname','$bday','$address','$phone','$email','$idcard','$position','$userpic') ";
-    
-        $result = mysqli_query($conn, $sql) or die ("Error in query: $sql " . mysqli_error());
-        
-        //ปิดการเชื่อมต่อ database
-        mysqli_close($conn);
-
-        if($_POST['password'] != $_POST['ConfirmPW']) {
-            echo "กรุณากรอกรหัสให้ตรงกัน";
-            exit();
-        }
-
-         //ถ้ากรอกข้อมูลถูกต้อง/สำเร็จให้ alert
-	    if ($result){
-		echo "<script type='text/javascript'>";
-		echo"alert('คุณลงทะเบียนสำเร็จ!');";
-	    echo"window.location = 'regist.php';";
-		echo "</script>";
-		}
-		else {
-			//กำหนดเงื่อนไขว่าถ้าไม่สำเร็จให้ขึ้นข้อความและกลับไปหน้าเพิ่ม		
-				echo "<script type='text/javascript'>";
-				echo "alert('error!');";
-				echo"window.location = 'regist.php'; ";
-				echo"</script>";
-        }
-
-    } */
 ?>
 
     
@@ -235,10 +187,36 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
 
@@ -258,11 +236,7 @@
                         <i class="fas fa-align-left"></i>
                     </button>
                 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                   
 
                 </div>
             </nav>

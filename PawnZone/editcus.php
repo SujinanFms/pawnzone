@@ -1,21 +1,6 @@
 <?php
     session_start();
     include_once('config.php');
-
-        //สร้างตัวแปร
-        /* $fname = @$_POST['firstname'];
-        $lname = @$_POST['lastname'];
-        $dpawn = @$_POST['pawnday'];
-        $address = @$_POST['address'];
-        $tel = @$_POST['tel'];
-    
-        $goldt = @$_POST['goldtype'];
-        $weight = @$_POST['input_weight'];
-        $price = @$_POST['input_price'];
-        $rate = @$_POST['input_rate'];
-        $payrate = @$_POST['input_payrate'];
-        $duepayment = @$_POST['input_duepayment']; */
-
 ?>
 
     
@@ -112,10 +97,36 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 
             </ul>
@@ -136,11 +147,7 @@
                         <i class="fas fa-align-left"></i>
                     </button>
                 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                   
 
                 </div>
             </nav>
@@ -165,7 +172,7 @@
                     
                     // query ข้อมูลจากตาราง: 
                     $query = "select * FROM customer WHERE CusID='$cus_id' ";
-                    $result = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error());
+                    $result = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error($result));
                     $row = mysqli_fetch_array($result);
                    
 
@@ -173,7 +180,6 @@
                     $update_CusID = $row['CusID'];
                     $update_CusFname = $row['CusFname'];
                     $update_CusLname = $row['CusLname'] ;
-                    $update_Cuspawnday = $row['Cuspawnday']; 
                     $update_CusAddress = $row['CusAddress'];
                     $update_Tel = $row['Tel'];
                     $update_CusImg = $row['CusImg'];
@@ -208,17 +214,7 @@
                                 </div>
                             </div>
                     </div> 
-                </div>        
-                <!-- <div class="form-group col-md-6">
-                    <label for="birthday">วัน/เดือน/ปี ที่จำนำ </label>
-                    <input type="date" name="pawnday" id="pawnday" class="form-control" required value="<php echo $update_Cuspawnday ?>">
-                    <div class="valid-feedback">
-                        คุณกรอกข้อมูลเรียบร้อยแล้ว!
-                    </div>
-                    <div class="invalid-feedback">
-                            กรุณากรอกวัน/เดือน/ปีนำทองมาจำนำ!
-                    </div>
-                </div>  -->
+                </div>   
                 <div class="form-group col-md-12">
                         <label for="address">ที่อยู่ </label>
                         <input type="text" name="address" id="address" class="form-control" required value="<?php echo  $update_CusAddress ?>">

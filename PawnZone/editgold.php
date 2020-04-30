@@ -128,10 +128,36 @@ function nStr(){
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -152,11 +178,7 @@ function nStr(){
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                    
 
                 </div>
             </nav>
@@ -165,19 +187,14 @@ function nStr(){
         <!-- สร้างฟอร์มข้อมูลลูกค้า -->
         <div class="container">
         <form name="form1" class="main-form needs-validation" action="updategold.php" method="post" enctype="multipart/form-data" novalidate>
-                <?php if($_GET["gold_id"]==''){ 
-                echo "<script type='text/javascript'>"; 
-                echo "alert('Error !!');"; 
-                echo "window.location = 'editgold.php'; "; 
-                echo "</script>"; 
-                }
+                <?php 
 
                 //รับค่าไอดีที่จะแก้ไข
                 $gold_id = mysqli_real_escape_string($conn,$_GET['gold_id']);
                 
                 // query ข้อมูลจากตาราง: 
                 $query = "select * FROM golds WHERE GoldID ='$gold_id' ";
-                $result = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error());
+                $result = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error($query));
                 $row = mysqli_fetch_array($result);
 
                 //สร้างตัวแปรสำหรับรับค่าที่นำมาแก้ไขจากฟอร์ม

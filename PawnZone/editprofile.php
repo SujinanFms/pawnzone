@@ -1,63 +1,7 @@
 <?php 
     session_start();
     include_once('config.php');
-
-    /* if (isset($_POST['regist'])) {
-        //รับค่ามาจากฟอร์ม
-        $username = $_POST['username'];
-        $password = $conn->real_escape_string($_POST['password']);
-        $conpw = $conn->real_escape_string($_POST['ConfirmPW']);
-        $fname = $_POST['fname'];
-        $lname = $_POST['lname'];
-        $bday = $_POST['bday'];
-        $address = $_POST['Add'];
-        $phone = $_POST['phone'];
-        $email = $_POST['email'];
-        $idcard = $_POST['idcard'];
-        $position = $_POST['position'];
-        $userpic = $_POST['userpic'];
-        
-        //เช็คการ confirm password
-        if($_POST['password'] != $_POST['ConfirmPW']) {
-            echo "<script type='text/javascript'>";
-            echo"alert('กรุณากรอกรหัสให้ตรงกัน!');";
-            echo"window.location = 'regist.php';";
-            echo "</script>";
-            exit();
-       
-        } else { 
-        $sql = "INSERT INTO members (MBusername,MBpassword,MBfname,MBlname,MBbday,MBaddress,phone,email,MBidcard,MBstatus,MBpicture)
-        VALUES ('$username','$password','$fname','$lname','$bday','$address','$phone','$email','$idcard','$position','$userpic') ";
-
-         $result = mysqli_query($conn, $sql) or die ("Error in query: $sql " . mysqli_error());
-        }
-         
-        //ปิดการเชื่อมต่อ database
-        mysqli_close($conn);
-
-        if ($result){
-            echo "<script type='text/javascript'>";
-            echo"alert('คุณลงทะเบียนสำเร็จ!');";
-            echo"window.location = 'regist.php';";
-            echo "</script>";
-            }
-            else {
-                //กำหนดเงื่อนไขว่าถ้าไม่สำเร็จให้ขึ้นข้อความและกลับไปหน้าเพิ่ม		
-                    echo "<script type='text/javascript'>";
-                    echo "alert('error!');";
-                    echo"window.location = 'regist.php'; ";
-                    echo"</script>";
-            }
-
-    
-} */
-
 ?>
-
-    
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -150,10 +94,36 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
 
@@ -173,11 +143,7 @@
                         <i class="fas fa-align-left"></i>
                     </button>
                 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                   
 
                 </div>
             </nav>
@@ -185,19 +151,12 @@
             <div class="editmember">
             <form class="regist-form needs-validation" action="updatemember.php" method="post" enctype="multipart/form-data" novalidate>
             <?php 
-                /* if($_GET["member_id"]==''){ 
-                    echo "<script type='text/javascript'>"; 
-                    echo "alert('Error !!');"; 
-                    echo "window.location = 'editprofile.php'; "; 
-                    echo "</script>"; 
-                    } */
-    
                     //รับค่าไอดีที่จะแก้ไข
                     $member_id = mysqli_real_escape_string($conn,$_GET['member_id']);
 
                     // query ข้อมูลจากตาราง: 
                     $query = "select * FROM members WHERE MbID ='$member_id' ";
-                    $result = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error());
+                    $result = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error($query));
                     $row = mysqli_fetch_array($result);
 
                     $path = 'userpic/';

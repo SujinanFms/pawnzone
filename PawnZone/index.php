@@ -19,15 +19,15 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://kit.fontawesome.com/83fa38a1a9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 </head>
 <body>
     <div class="wrapper">
-        <!-- Sidebar  -->
         <nav id="sidebar">
-        <div class="sidebar-header">
+            <div class="sidebar-header">
                 <?php isset($_SESSION['MbID']); ?>
-                    <h2>คุณ <?php echo $_SESSION['fname']; ?></h2>
-                    <h2>สถานะ :  <?php echo $_SESSION['position']; ?></h2>
+                    <h2 style="color:white">คุณ <?php echo $_SESSION['fname']; ?></h2>
+                    <h2 style="color:white">สถานะ :  <?php echo $_SESSION['position']; ?></h2>
                     <strong><?php echo $_SESSION['fname']; ?></strong>
             </div>
 
@@ -98,24 +98,48 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-
+                
 
             </ul>
-
+            <br>
             <div class="logout">
-                <a href="logout.php">
+                <a href="logout.php"> 
                     <input type="submit" class="btn btn-warning" name="logout" value="Logout"><br>
                 </a>
             </div>
 
-
-
-        </nav> <!-- Sidebar  -->
+        </nav>
 
         <!-- Page Content  -->
         <div id="content">
@@ -125,11 +149,7 @@
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                    
 
                 </div>
             </nav>
@@ -140,8 +160,6 @@
                     <span id="date_time"></span>
                     <script type="text/javascript">window.onload = date_time('date_time');</script>
                 </div>
-
-
                 <div class="contentprice">
                     <center>
                     <?php
@@ -149,7 +167,7 @@
 
                         $findme1 = ">ข่าวแนวโน้มราคาทองคำ";
                         $findme2 = "<div"; //mainCol
-                        $findme3 = "ข่าวเกี่ยวกับราคาทองล่าสุดวันนี้";
+                        $findme3 = "ข่าวราคาทองล่าสุดวันนี้";
 
                         $cutstr1 = strstr($homepage,$findme1);
                         $cutstr2 = strstr($cutstr1,$findme2); //leftCol
@@ -162,12 +180,19 @@
 
                         $curstr1 = substr($cutstr2,0,$rightlen);
                         
+                        //เปลี่ยนขนาดตาราง
                         $curstr4 = str_replace("display:inline-block;width:336px;height:280px","display:inline-block;width:336px;height:0px","$curstr1"); 
                         
+                        //เปลี่ยนขนาดตัวอักษรในตาราง
+                        $curstr5 = str_replace(".span{width:40%;line-height:26px;font-size:19px;}.em{width:30%;color:#444;font-size:21px;line-height:26px;}",".span{width:40%;line-height:26px;font-size:28px;}.em{width:30%;color:#444;font-size:28px;line-height:26px;}","$curstr4");
+                        $curstr6 = str_replace(".h-h3{margin:9px;background:none;font-size:19px;",".h-h3{margin:9px;background:none;font-size:30px;","$curstr5");
+                        $curstr7 = str_replace("txtd{font-size:13px;font-weight:700}","txtd{font-size:20px;font-weight:700}","$curstr6");
+                            
+
 
                         if($cutstr1!==FALSE){
 
-                            echo $curstr4;
+                            echo $curstr7;
 
                         }else{
 
@@ -175,40 +200,10 @@
 
                         }
 
-                    ?>
-                    <!-- <php
-                        $homepage = file_get_contents('https://xn--42cah7d0cxcvbbb9x.com/tag/%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%97%E0%B8%AD%E0%B8%87%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%99%E0%B8%B5%E0%B9%89/');
-
-                        $findme1 = "ราคาทองตามประกาศสมาคมค้าทองคำ";
-                        $findme2 = "ข่าวเกี่ยวกับราคาทองล่าสุดวันนี้";
-
-                        $cutstr1 = strstr($homepage,$findme1);
-                        $cutstr2 = strstr($homepage,$findme2);
-
-                        $len1 = strlen($cutstr1);
-                        $len2 = strlen($cutstr2);
-
-                        $clen = $len1-$len2;
-
-
-
-                        $curstr = substr($cutstr1,0,$clen);
-
-
-                        if($cutstr1!==FALSE){
-
-                            echo $curstr;
-
-                        }else{
-
-                            echo "ไม่พบ";
-
-                        }
-
-                    ?> -->
-                    <!-- <iframe src="https://xn--42cah7d0cxcvbbb9x.com/tag/%E0%B8%A3%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%97%E0%B8%AD%E0%B8%87%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%99%E0%B8%B5%E0%B9%89/" width="600px" height="300px" scrolling="no"> -->
-                </div>
+                    ?></div>
             </div>
+
+            
 
         </div>  <!-- Content  -->
     </div>     <!-- wrapper  -->

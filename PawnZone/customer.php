@@ -18,6 +18,48 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://kit.fontawesome.com/83fa38a1a9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <style>
+        #myInput {
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            width: 30%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            margin-left: 20px;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+
 </head>
 <body>
     <div class="wrapper">
@@ -97,10 +139,36 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php#">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
 
@@ -122,11 +190,7 @@
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                   
 
                 </div>
             </nav>
@@ -134,6 +198,13 @@
 
                <!-- ประวัติลูกค้า -->
         <div class="tbcontainer">
+
+
+
+        <div class="row">
+                <input id="myInput" type="text" placeholder="Search.."> 
+            </div>
+            <br>
         <?php
             //query ข้อมูลจากตาราง customer
             $query = "select * FROM customer";
@@ -147,52 +218,37 @@
             echo"<table id='tbcustomer' class='table table-striped table-bordered' >";
             echo "<thead>";
                 echo "<tr>";
-                    // echo "<th>รูป</th>";
                     echo "<th>รหัสลูกค้า</th>";
                     echo "<th>รูป</th>";
                     echo "<th>ชื่อ-นามสกุล</th>";
-                    // echo "<th>วันที่จำนำ</th>";
                     echo "<th>ที่อยู่</th>";
                     echo "<th>เบอร์โทรศัพท์</th>";
                     echo "<th>แก้ไข</th>";
                     echo "<th>ข้อมูลทั้งหมด</th>";
                 echo "</tr>";
             echo "</thead>";
-            echo "<tbody>";
+            echo "<tbody id='myTable'>";
             while($row = mysqli_fetch_array($result)){
                 
                 echo "<tr>";
-                // echo "<td>" .$row["CusPic"] .  "</td>";
                 echo "<td>" .$row["CusID"] .  "</td>";
                 ?>
-                <td>   
-                    <img src= "cusimg/<?php echo $row["CusImg"];?>" width="10%">
+                <td width="10%">   
+                    <img src= "cusimg/<?php echo $row["CusImg"];?>" width="50%">
                 </td>
                 <?php
                 echo "<td>" .$row["CusFname"]."&nbsp&nbsp".$row["CusLname"].  "</td>";
-                // echo "<td>" .$row["Cuspawnday"] .  "</td>";
                 echo "<td>" .$row["CusAddress"] .  "</td>";
                 echo "<td>0" .$row["Tel"] .  "</td>";
 
-            //แก้ไขข้อมูล?>
+                ?>
                <td>
                     <a class='btn btn-link btn-sm' href='editcus.php?cus_id=<?=$row["CusID"];?>'><span class='fas fa-pencil-alt'></span></a>
-                    <!-- <a class='btn btn-link btn-sm' href='edit2.php?edit=<  $row["CusID"];?>' ><span class='fas fa-pencil-alt'></span></a> -->
-                    
-                    <!-- <a herf='#UserUpdateForm.php?'" .$row["0"] . "'title=Update Record' data-toggle='tooltip'><span class='fas fa-pencil-alt'></span></a>"; -->
-               </td>
+                </td>
                <td>
                 <a class='btn btn-link btn-sm' href='showdata_pawngold.php?pawngold_id=<?=$row["CusID"];?>'><span class='far fa-eye'></span></a>
                </td>
                <?php
-                    //echo "<a herf='#UserUpdateForm.php?'" .$row["0"] . "'title=Update Record' data-toggle='tooltip'><span class='fas fa-pencil-alt'></span></a>";
-                
-            //ดูข้อมูลทั้งหมด
-                /* echo "<td>";
-                echo " <a class='btn btn-link btn-sm' href='Hispawngold.php'><span class='far fa-eye'></span></a>";
-                
-                //echo "<a herf='#UserUpdateForm.php?'" .$row["0"] . "'title=View Record' data-toggle='tooltip'><span class='far fa-eye'></span></a>";
-                echo "</td>"; */
                 echo "</tr>";
                 }
             echo "<tbody>";

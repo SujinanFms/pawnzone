@@ -128,10 +128,36 @@ function nStr(){
                     </ul>
                 </li>
                 <li>
-                    <a href="report.php">
+                    <a href="#reportSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="fas fa-file-import"></i>
                         ออกรายงาน
                     </a>
+                    <ul class="collapse list-unstyled" id="reportSubmenu">
+                        <li>
+                            <a href="report.php">
+                                <i class="fas fa-hand-holding-usd"></i>
+                                รายได้สุทธิ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report1.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report2.php">
+                            <i class="fas fa-ring"></i>
+                                ไถ่ถอน-นำไปหลอม
+                            </a>
+                        </li>
+                        <li>
+                            <a href="report3.php">
+                            <i class="fas fa-ring"></i>
+                                จำนวนทองคงเหลือ
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>
@@ -152,11 +178,7 @@ function nStr(){
                         <i class="fas fa-align-left"></i>
                     </button>
 
-                    <div class="top_menu">
-                        <ul>
-                            <li><a href="#"><i class="fas fa-search"></i></a></li>
-                        </ul>
-                    </div>
+                   
 
                 </div>
             </nav>
@@ -175,8 +197,8 @@ function nStr(){
 
                 $pawngold_id = mysqli_real_escape_string($conn,$_GET['pawngold_id']);
 
-                $query = "select * FROM customer  WHERE golds.CusID ='$pawngold_id' ";
-                $result = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error());
+                $query = "select * FROM customer ,golds WHERE golds.GoldID ='$pawngold_id' && golds.CusID = customer.CusID ";
+                $result = mysqli_query($conn, $query) or die ("Error in query: $query " . mysqli_error($query));
                 $row = mysqli_fetch_array($result);
 
 
@@ -184,14 +206,13 @@ function nStr(){
                 $update_CusID = $row['CusID'];
                 $update_CusFname = $row['CusFname'];
                 $update_CusLname = $row['CusLname'] ;
-                $update_Cuspawnday = $row['Cuspawnday']; 
                 $update_CusAddress = $row['CusAddress'];
                 $update_Tel = $row['Tel'];
                 $update_CusImg = $row['CusImg'];
 
 
-                $query2 = "select * FROM customer , golds WHERE golds.CusID ='$pawngold_id' ";
-                $result2 = mysqli_query($conn, $query) or die ("Error in query:$query " . mysqli_error());
+                $query2 = "select * FROM golds where  golds.GoldID = '$pawngold_id'  ";
+                $result2 = mysqli_query($conn, $query2) or die ("Error in query:$query2 " . mysqli_error($query2));
                 $row2 = mysqli_fetch_array($result2);
 
                 $update_GoldID = $row2['GoldID'];
@@ -237,17 +258,7 @@ function nStr(){
                                 </div>
                             </div>
                     </div> 
-                </div>        
-                <!-- <div class="form-group col-md-6">
-                    <label for="birthday">วัน/เดือน/ปี ที่จำนำ </label>
-                    <input type="date" name="pawnday" id="pawnday" class="form-control" required value="<php echo $update_Cuspawnday ?>">
-                    <div class="valid-feedback">
-                        คุณกรอกข้อมูลเรียบร้อยแล้ว!
-                    </div>
-                    <div class="invalid-feedback">
-                            กรุณากรอกวัน/เดือน/ปีนำทองมาจำนำ!
-                    </div>
-                </div>  -->
+                </div>      
                 <div class="form-group col-md-12">
                         <label for="address">ที่อยู่ </label>
                         <input type="text" name="address" id="address" class="form-control" required value="<?php echo  $update_CusAddress ?>">
@@ -289,9 +300,6 @@ function nStr(){
                 </div>
             </div>
         </div>
-           <!--  <div class="pawncard">
-                    <button class="btn btn-primary" type="submit" name="update_data" value="Update">ยืนยันการแก้ไข</button>
-            </div> -->
             </form>         
         
 
@@ -300,11 +308,11 @@ function nStr(){
             <div class="form-check col-md-12">
                     <label for="goldtype">ทองคำประเภท</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="update_goldtype" id="inlineRadio1" required value="ทองคำแท่ง" <?php if( $row["TypeGold"] == "ทองคำแท่ง") { echo "checked"; } ?>>
+                        <input class="form-check-input" type="radio" name="update_goldtype" id="inlineRadio1" required value="ทองคำแท่ง" <?php if( $row2["TypeGold"] == "ทองคำแท่ง") { echo "checked"; } ?>>
                         <label class="form-check-label" for="inlineRadio1">ทองคำแท่ง</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="update_goldtype" id="inlineRadio2" required value="ทองคำรูปพรรณ" <?php if($row["TypeGold"] == "ทองคำรูปพรรณ") { echo "checked"; } ?>>
+                        <input class="form-check-input" type="radio" name="update_goldtype" id="inlineRadio2" required value="ทองคำรูปพรรณ" <?php if($row2["TypeGold"] == "ทองคำรูปพรรณ") { echo "checked"; } ?>>
                         <label class="form-check-label" for="inlineRadio2">ทองคำรูปพรรณ</label>
                     </div>
                     <div class="invalid-feedback">กรุณาเลือกประเภททองคำ</div>
@@ -402,8 +410,8 @@ function nStr(){
                             <div class="col-md-4">
                                 <label for="duepayment">กำหนดชำระดอกเบี้ย</label>
                                     <select class="custom-select" id="update_duepayment" name="update_duepayment"  required>
-                                        <option value="1เดือน" <?php if( $row["DuePayment"] == "1เดือน") echo  "selected"; ?> >1 เดือน</option>
-                                        <option value="3เดือน" <?php if( $row["DuePayment"] == "3เดือน") echo  "selected"; ?> >3 เดือน</option>
+                                        <option value="1เดือน" <?php if( $row2["DuePayment"] == "1เดือน") echo  "selected"; ?> >1 เดือน</option>
+                                        <option value="3เดือน" <?php if( $row2["DuePayment"] == "3เดือน") echo  "selected"; ?> >3 เดือน</option>
                                     </select>
                                     <div class="valid-feedback">
                                             คุณกรอกข้อมูลเรียบร้อยแล้ว!
@@ -442,31 +450,11 @@ function nStr(){
                                 </div>
                             </div>       
 
-
-                            <div class="col">
-                            <div class=" col-md-8">
-                                <label for="goldStatus">สถานะ</label>
-                                    <select class="custom-select" id="update_goldStatus" name="update_goldStatus"  required>
-                                        <option value="อยู่ในระบบ" <?php if( $row["GoldStatus"] == "อยู่ในระบบ") echo  "selected"; ?> >อยู่ในระบบ</option>
-                                        <option value="ไถ่ถอน" <?php if( $row["GoldStatus"] == "ไถ่ถอน") echo  "selected"; ?> >ไถ่ถอน</option>
-                                        <option value="นำไปหลอม" <?php if( $row["GoldStatus"] == "นำไปหลอม") echo  "selected"; ?> >นำไปหลอม</option>
-                                    </select>
-                                    <div class="valid-feedback">
-                                            คุณกรอกข้อมูลเรียบร้อยแล้ว!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                            กรุณากรอกระยะเวลากำหนดชำระดอกเบี้ย!
-                                    </div>
-                            </div>
-                    </div>                 
-
-
-
                         </div>
                     <div class="pawncard">
                     <a href="Hispawngold.php" class="btn btn-primary" id="btn" type="submit" name="submit">ย้อนกลับ</a>
                     <a href="editcus.php?cus_id=<?=$row["CusID"];?>" class="btn btn-warning" id="btn" type="submit" name="submit">แก้ไขข้อมูลลูกค้า</a>
-                    <a href="editgold.php?gold_id=<?=$row["GoldID"];?>" class="btn btn-warning" id="btn" type="submit" name="submit">แก้ไขข้อมูลทอง</a>
+                    <a href="editgold.php?gold_id=<?=$row2["GoldID"];?>" class="btn btn-warning" id="btn" type="submit" name="submit">แก้ไขข้อมูลทอง</a>
                     
                     </div>
 
